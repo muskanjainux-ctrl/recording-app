@@ -77,9 +77,13 @@ function RecordPage() {
     // fresh
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
-        ? "audio/webm;codecs=opus"
-        : "audio/webm";
+      const mime = MediaRecorder.isTypeSupported("audio/mp4")
+        ? "audio/mp4"
+        : MediaRecorder.isTypeSupported("audio/m4a")
+          ? "audio/m4a"
+          : MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+            ? "audio/webm;codecs=opus"
+            : "audio/webm";
       const rec = new MediaRecorder(stream, { mimeType: mime });
       chunksRef.current = [];
       accRef.current = 0;
