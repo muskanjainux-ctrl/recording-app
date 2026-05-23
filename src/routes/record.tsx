@@ -45,7 +45,6 @@ function RecordPage() {
     a.volume = 0.4;
     void a.play().catch(() => {});
   }, []);
-  const cameraFileRef = useRef<HTMLInputElement | null>(null);
   const galleryFileRef = useRef<HTMLInputElement | null>(null);
 
   const startTick = useCallback(() => {
@@ -303,16 +302,6 @@ function RecordPage() {
               Reset
             </button>
             <input
-              ref={cameraFileRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="hidden"
-              onChange={(e) => {
-                const f = e.target.files?.[0]; if (f) onPhoto(f);
-              }}
-            />
-            <input
               ref={galleryFileRef}
               type="file"
               accept="image/*"
@@ -333,28 +322,17 @@ function RecordPage() {
                     {photoPreview ? (
                       <img src={photoPreview} alt="Polaroid" className="h-14 w-14 shrink-0 border border-[#aca899] object-cover" />
                     ) : (
-                      <div className="grid h-14 w-14 shrink-0 gap-1 rounded-sm border border-dashed border-[#7c7a6f] bg-[#f7f5ec] p-1 text-[9px] text-[#555]">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            playClickSound();
-                            cameraFileRef.current?.click();
-                          }}
-                          className="rounded-sm border border-[#7c7a6f] bg-white px-1 text-[9px] transition hover:bg-[#f3f3f1]"
-                        >
-                          📸 Take
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            playClickSound();
-                            galleryFileRef.current?.click();
-                          }}
-                          className="rounded-sm border border-[#7c7a6f] bg-white px-1 text-[9px] transition hover:bg-[#f3f3f1]"
-                        >
-                          🖼 Gallery
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          playClickSound();
+                          galleryFileRef.current?.click();
+                        }}
+                        className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-sm border border-dashed border-[#7c7a6f] bg-[#f7f5ec] px-1 text-[9px] text-[#555] hover:bg-white"
+                      >
+                        🖼 Gallery
+                        <span className="mt-0.5 leading-none">Add</span>
+                      </button>
                     )}
                     <div className="flex min-w-0 flex-1 flex-col gap-1">
                       <input
